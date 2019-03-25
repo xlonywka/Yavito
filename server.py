@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 @app.errorhandler(404)
 def not_found(error):
-    return make_response(jsonify({'error': 'Not found 404'}), 404)
+    return '''<head><title>Error 418</title><head><body><h1 align="center"><b>Error 418</b></h1><hr width=100%><h2 align="center"><i>I am a teapot</i></h2></body>'''
 
 #WORK WITH LOGIN AND LOGOUT-------------------------------------------------
 
