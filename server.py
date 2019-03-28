@@ -52,7 +52,6 @@ def not_found(error):
     return '<h1 align="center">Error 418</h1><hr width="100%"> <h3 align="center">I am a teapot.</h3>'
 
 #WORK WITH LOGIN AND LOGOUT-------------------------------------------------
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -131,29 +130,12 @@ def delete_news1(news_id):
     nm.delete(news_id)
     return redirect("/index")
 
-
-@app.route('/news',  methods=['GET'])
-def get_news():
-    news = NewsModel(db.get_connection()).get_all()
-    return jsonify({'news': news})
-
 @app.route('/news/<int:news_id>',  methods=['GET'])
 def get_one_news(news_id):
     news = NewsModel(db.get_connection()).get(news_id)
     if not news:
         return jsonify({'error': 'Not found this news'})
     return jsonify({'news': news})
-
-@app.route('/news', methods=['POST'])
-def create_news():
-    if not request.json:
-        return jsonify({'error': 'Empty request'})
-    elif not all(key in request.json for key in ['user_id', 'content', 'title', 'phonenumber', 'price', 'place']):
-        return jsonify({'error': 'Bad request'})
-    news = NewsModel(db.get_connection())
-    news.insert(request.json['user_id'], request.json['content'],
-                request.json['title'], request.json['phonenumber'], request.json['price'], request.json['place'])
-    return jsonify({'success': 'OK'})
 
 @app.route('/news/<int:news_id>', methods=['DELETE'])
 def delete_news(news_id):
@@ -162,7 +144,6 @@ def delete_news(news_id):
         return jsonify({'error': 'Not found'})
     news.delete(news_id)
     return jsonify({'success': 'OK'})
-
 #WORK WITH NEWS-------------------------------------------------------------
 
 
