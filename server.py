@@ -1,4 +1,5 @@
 from flask import *
+from flask_restful import reqparse, abort, Api, Resource
 from loginform import LoginForm
 from signupform import SignUpForm
 from add_news import AddNewsForm
@@ -8,10 +9,47 @@ db = DB()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
+#WORK WITH API-------------------------------------------------------------
+api = Api(app)
+parser = reqparse.RequestParser()
+parser.add_argument('title', required=True)
+parser.add_argument('content', required=True)
+parser.add_argument('user_id', required=True, type=int)
+
+
+class NewsApi(Resource):
+    def get(self, news_id):
+        abort_if_news_not_found(news_id)
+        news = NewsModel(db.get_connection()).get(news_id)
+        return jsonify({'news': news})
+ 
+    def delete(self, news_id):
+        abort_if_news_not_found(news_id)
+        NewsModel(db.get_connection()).delete(news_id)
+        return jsonify({'success': 'OK'})
+
+class NewsListApi(Resource):
+    def get(self):
+        news = NewsModel(db.get_connection()).get_all()
+        return jsonify({'news': news})
+ 
+    def post(self):
+        args = parser.parse_args()
+        news = NewsModel(db.get_connection())
+        news.insert(args['title'], args['content'], args['user_id'])
+        return jsonify({'success': 'OK'})
+
+api.add_resource(NewsListApi, '/api/news') # для списка объектов
+api.add_resource(NewsApi, '/api/news/<int:news_id>')
+
+def abort_if_news_not_found(news_id):
+    if not NewsModel(db.get_connection()).get(news_id):
+        abort(404, message="News {} not found".format(news_id))
+#WORK WITH API-------------------------------------------------------------
 
 @app.errorhandler(404)
 def not_found(error):
-    return '''<head><title>Error 418</title><head><body><h1 align="center"><b>Error 418</b></h1><hr width=100%><h2 align="center"><i>I am a teapot</i></h2></body>'''
+    return '<h1 align="center">Error 418</h1><hr width="100%"> <h3 align="center">I am a teapot.</h3>'
 
 #WORK WITH LOGIN AND LOGOUT-------------------------------------------------
 
