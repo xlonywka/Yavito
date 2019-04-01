@@ -58,7 +58,7 @@ def index():
     if 'username' not in session:
         return redirect('/login')
     news = NewsModel(db.get_connection()).get_all()
-    return render_template('index.html', username=session['username'],
+    return render_template('index.html', username=session['username'], user_id=session['user_id'],
                            news=news)
 
 @app.route('/signup', methods=['GET', 'POST'])

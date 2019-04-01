@@ -93,7 +93,7 @@ class NewsModel:
             cursor.execute("SELECT * FROM news WHERE user_id = ?",
                            (str(user_id)))
         else:
-            cursor.execute("SELECT id, title, phonenumber, content, price, place  FROM news")
+            cursor.execute("SELECT id, title, phonenumber, content, price, place, user_id  FROM news")
         rows = cursor.fetchall()
         return rows
 

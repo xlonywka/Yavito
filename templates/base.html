@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>{{title}}</title>
 </head>
-  <body>
+  <body  style="background-color: #e9edf5;">
     <header>
-      <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand"href="index"><img width='25%' height='20%' src='static/i.png'></a>
+      <nav class="navbar navbar-light" style="background-color: #d0e3f7;">
+        <a class="navbar-brand" href="index"><img width='25%' height='20%' src='static/i.png'></a>
         {% if "username" in session %}
-   			<a class="navbar-brand" href="/logout">{{session['username']}}</a>
+   			<a class="navbar-brand" href="/logout">Выход({{session['username']}})</a>
 		{% endif %}
       </nav>
     </header>
