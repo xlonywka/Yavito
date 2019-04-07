@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+ 
+{% block content %}
+
+  <h2>Вы вошли под своим логином - {{ username }}.</h2>
+
+  <a href="/add_news">Добавить объявление</a>
+  
+	{% for item in news %}
+		{% if user_id == item[6] %}
+	    <div class="alert light-primary" role="alert">
+	        <p><h2>{{item[1]}}</h2><h5>{{item[3]}}</h5></p>
+	        <h7>{{item[2]}}</h7>
+			<p><h7>{{item[4]}}.</h7>  
+			<h7>{{item[5]}}</h7></p>
+	        <a href="/delete_news/{{item[0]}}">Удалить объявление</a>
+	    </div>
+		{% endif %}
+	{% endfor %}
+  
+{% endblock %}

@@ -11,7 +11,7 @@
       <nav class="navbar navbar-light" style="background-color: #d0e3f7;">
         <a class="navbar-brand" href="index"><img width='25%' height='20%' src='static/i.png'></a>
         {% if "username" in session %}
-   			<a class="navbar-brand" href="/logout">Выход({{session['username']}})</a>
+   			<a href='myads'>Мои объявление</a><a href="/logout">Выход({{session['username']}})</a>
 		{% endif %}
       </nav>
     </header>
